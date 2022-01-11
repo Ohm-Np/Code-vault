@@ -1,4 +1,7 @@
 # Personal
-To try several coding
+A personal repository to collect codes - from multiple programming languages - focusing on spatial data analysis. 
 
-This repository is solely dedicated to stuff my personal test codes.
+These includes:
+1. R
+2. Python
+3. Javascript
