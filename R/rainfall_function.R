@@ -1,5 +1,5 @@
 # create function for 11 districts; 28 years; but monthwise
-
+# The data we used for this script is from the WorldClim.org 
 library(terra)
 
 zstats <- function(y, m) {
