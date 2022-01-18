@@ -1,32 +1,32 @@
-# create function for 11 districts; 28 years; but monthwise
+# create function for 11 districts; 28 years; but monthwise (study area: Gandaki province, Nepal)
 # The data we used for this script is from the WorldClim.org 
 library(terra)
 
-zstats <- function(y, m) {
+zstats <- function(year, month) {
 
 
-  # load raster
+  # load the climate raster
   rast <-
-    terra::rast(paste0("../Desktop/rasters/wc2.1_2.5m_prec_",y,"-",m,".tif"))
-  # district
+    terra::rast(paste0("../Desktop/rasters/wc2.1_2.5m_prec_",year,"-",month,".tif"))
+  # load the district polygon
   dist <-
     vect("../Desktop/nepal sf/tanahun.gpkg")
-  # crop
+  # crop the raster by the polygon
   crop <-
     terra::crop(rast, dist)
-  # mask
+  # mask the copped raster by the polygon
   mask <-
     terra::mask(crop, dist)
-  # rasterize
+  # rasterize the polygon
   r <-
     terra::rasterize(dist, mask)
-  # zonal statistics
+  # compute the zonal statistics
   zstats <-
     terra::zonal(mask,
                  r,
                  fun='sum',
                  na.rm=T)
-  # store in data frame
+  # store zonal statistics in data frame
   df.zstats <- data.frame(district="tanahun",
                           year=y,
                           month=m,
@@ -35,9 +35,10 @@ zstats <- function(y, m) {
   return(df.zstats)
 }
 
-# # test
+# # test the function
 # final <- zstats(1990, "01")
 
+# call the function in loop to process all the rasters
 for (i in 1990:2018) {
 
   final <-
