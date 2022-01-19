@@ -1,26 +1,29 @@
-install.packages("remotes")
+# install.packages("remotes")
 library(remotes)
-remotes::install_github("ohm-Np/openrspat")
+
+# --- get GADM data ---
+remotes::install_github("ohm-Np/openRspat")
 library(openRspat)
-get_gadm_gpkg("NPL","../Downloads/")
+get_gadm_gpkg("NPL","../Downloads")
 unzip(zipfile = "../Downloads/NPL.zip",
       exdir = "../Downloads")
-install.packages("sf")
 
+
+# --- subset Kathmandu valley from the GADM polygon ---
+install.packages("sf")
 library(sf)
+library(dplyr)
 npl <- read_sf("../Downloads/gadm36_NPL.gpkg")
 plot(npl[1])
-install.packages(???mapview???)
+# install.packages("mapview")
 library(mapview)
 mapview(npl)
 install.packages("dplyr")
 library(dplyr)
 npl.ktm <- npl %>%
   filter(NAME_3 == "Kathmandu")
-
 npl.ltp <- npl %>%
   filter(NAME_3 == "Lalitpur")
-
 npl.bkt <- npl %>%
   filter(NAME_3 == "Bhaktapur")
 plot(npl.ktm[1])
@@ -28,12 +31,13 @@ study_area <- bind_rows(npl.ktm, npl.bkt, npl.ltp)
 plot(study_area[1])
 write_sf(study_area,
          "../Downloads/study_area.gpkg")
+
+# --- not working ---
 install.packages("devtools")
 library(devtools)
 devtools::install_github("16EAGLE/getSpatialData")
 library(getSpatialData)
 library(raster)
-
 install.packages("tidyverse")
 library(tidyverse)
 library(sf)
@@ -55,43 +59,43 @@ p + geom_sf_text(aes(label = "kathmandu[1]"), colour = "white", size = 5.0)
 set_aoi(st_geometry(npl))
 set_aoi(st_geometry(sutdy.area[1]))
 view_aoi()
-
 login_USGS(username ="Abhishek_Kunwar")
-
 set_archive("./Downloads/")
 records <- getSentinel_query(time_range = c("2020-01-01", "2020-12-30"), 
                               platform = "sentinel-1")
 get_products()
-
-
-
 install.packages("kniDownloadstr")
 ibrary(knitr)
 knitr::include_graphics(".//levels.png")
-install.packages(terra)
+                  
+# --- load landsat rasters to the R environment                
+# install.packages("terra")
 library (terra)
 landcover_2005_SWIR <- rast("../Downloads/LE07_L1TP_141041_20050104_20170116_01_T1/LE07_L1TP_141041_20050104_20170116_01_T1_B5.tif")
 landcover_2005_NIR<-rast("../Downloads/LE07_L1TP_141041_20050104_20170116_01_T1/LE07_L1TP_141041_20050104_20170116_01_T1_B4.tif")
-ndbi_2005 <-  (landcover_2005-SWIR ??? landcover_2005-NIR) / (landcover_2005-SWIR + landcover_2005-NIR)
-study_area <- vect("../Downloads/study_area.gpkg")
+ndbi_2005 <-  (landcover_2005-SWIR - landcover_2005-NIR) / (landcover_2005-SWIR + landcover_2005-NIR)
 
+# --- load study area polygon ---
+study_area <- vect("../Downloads/study_area.gpkg")
 study_area
 landcover_2005_SWIR
 study_area.v <- terra::project(study_area,crs(landcover_2005_SWIR))
 study_area.v
+                  
+# --- crop and mask landsat rasters by study area polygon ---
 lc_2005_swir.crop <- crop(landcover_2005_SWIR, study_area.v )
 lc_2005_nir.crop <- crop(landcover_2005_NIR, study_area.v )
 lc_2005_swir.mask <- mask(lc_2005_swir.crop, study_area.v )
 lc_2005_nir.mask <- mask(lc_2005_nir.crop, study_area.v )
-
 rm(vector_filepath)
 s <- lc_2005_swir.mask
 n <- lc_2005_nir.mask
 
+# --- compute NDBI ---
 ndbi <- (s - n)/(s + n)
 plot(ndbi)
 0....NDBI_2005<-(lc_2005_swir.mask ??? lc_2005_nir.mask)/(lc_2005_swir.mask + lc_2005_nir.mask)
-R <- rast("../Downloads/LE07_L1TP_141041_20050104_20170116_01_T1/LE07_L1TP_141041_20050104_20170116_01_T1_B3.tif)
+R <- rast("../Downloads/LE07_L1TP_141041_20050104_20170116_01_T1/LE07_L1TP_141041_20050104_20170116_01_T1_B3.tif")
 
 R.crop <- crop(R, study_area.v )
 R.mask <- mask(R.crop, study_area.v )
@@ -102,6 +106,8 @@ s2005.c <- crop(s2005, study_area.v)
 s2005.m <- mask(s2005.c, study_area.v)
 n2005.c <- crop(n2005, study_area.v)
 n2005.m <- mask(n2005.c, study_area.v)
+                  
+# --- compute Urban Index ---
 ui2005 <- (s2005.m-n2005.m)/(s2005.m+n2005.m)
 plot(ui2005)
 writeRaster(ui2005, "../Downloads/ui_2005.tif")
@@ -111,13 +117,7 @@ kv<-vect("../Downloads/study_area-v.gpkg")
 plot(kv)
 library(terra)
 j18<-rast("../Downloads/wc2.1_2.5m_tmax_2010-2018/wc2.1_2.5m_tmax_2018-06.tif")
-Global rasters ??? rast(???J18???)
-
-
-
-
 kv<-vect("../Downloads/study_area-v.gpkg")
-
 kv <- terra::project(study_area.v,crs(landcover_2005_SWIR))
 j18
 kv <- terra::project(kv, 4326)
