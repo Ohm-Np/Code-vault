@@ -175,7 +175,50 @@ writeRaster(ui2010, "../Downloads/ui_2010.tif")
 writeRaster(ui2015, "../Downloads/ui_2015.tif")
 writeRaster(ui2020, "../Downloads/ui_2020.tif")
 
+# --- classification technique ---
+# load vector from file
+pol <- vect("../../Downloads/study_area-v.gpkg")
+# install package raster
+install.packages("raster")
+library(raster)
+# load raster ui2005
+rast <- raster("../../Downloads/ui_2005.tif")
 
+# classify function
+Classify_image = function(ui, year){
+  lc <- raster::reclassify(ui, c(-Inf,0.0,1, 0.0,Inf,2))
+  col=rev(terrain.colors(2))
+  plot(lc, main = paste("Classified Image (", toString(year), ")"), col=col,legend=FALSE)
+  legend(x="bottomright",legend=c("Non-urban", "Urban"),fill=col,cex=0.8)
+  return(lc)
+}
+
+# call function 
+class2005 <- Classify_image(rast, 2005)
+# save class2005 as tif
+raster::writeRaster(class2005,
+                    "../Desktop/landsat/class2005.tif")
+
+
+# load class2005 as terra
+library(terra)
+class2005.t <- rast("../Desktop/landsat/class2005.tif")
+# area of masked raster in km
+area_sqkm <- terra::expanse(class2005.t, unit="km")
+# as dataframe
+df <- as.data.frame(class2005.t)
+# rename df column name as value 
+df.new <- data.frame(value=NA)
+colnames(df) <- colnames(df.new)
+# area per cell
+library(dplyr)
+area_sqkm_per_cell <- area_sqkm/nrow(df)
+urban <- df %>% filter(value %in% 2) %>% nrow()
+# urban area at year 2005
+urbanarea_2005 <- area_sqkm_per_cell*urban
+
+                  
+# --- temperature data processing ---
 install.packages(terra)
 library(terra)
 rv<-vect("../Downloads/nayakv.gpkg")
