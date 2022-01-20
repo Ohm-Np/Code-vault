@@ -1,3 +1,5 @@
+### The chunks of script below is from the one small project - whose intended purpose is to see how the urban change is affecting the climate change patterns so the code is not executable. If you think, this part of code might help you in your task, feel free to open the issue or write me an email.
+
 # install.packages("remotes")
 library(remotes)
 
