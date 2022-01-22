@@ -201,7 +201,8 @@ class2005 <- Classify_image(rast, 2005)
 raster::writeRaster(class2005,
                     "../Desktop/landsat/class2005.tif")
 
-
+# to compute the area, first masked raster is converted to data frame & area is computed per row. Then, find the no. of rows with urban class and multiply with area per cell
+                  
 # load class2005 as terra
 library(terra)
 class2005.t <- rast("../Desktop/landsat/class2005.tif")
@@ -233,19 +234,21 @@ j2000.m<-mask(j2000.c,rv)
 r <- rasterize(rv, j2000.m)
 zstats <- zonal(j2000.m, r, fun='mean', na.rm=T)
 
+# 2010
 trj2010<-rast("../Downloads/j10.tif")
 j2010.c <- crop(trj2010,rv)
 j2010.m<-mask(j2010.c,rv)
 r2010<- rasterize(rv, j2010.m)
 zstats2010<-zonal(j2010.m,r2010,fun='mean',na.rm=T)
 
+# 2015
 trj2015<-rast("../Downloads/j15.tif")
 j2015.c<-crop(trj2015,rv)
 j2015.m<-mask(j2015.c,rv)
 r2015<- rasterize(rv, j2015.m)
 zstats2015<-zonal(j2015.m,r2015,fun='mean',na.rm=T)
 
-
+# 2018
 trj2018<-rast("../Downloads/j18.tif")
 j2018.c<-crop(trj2018,rv)
 j2018.m<-mask(j2018.c,rv)
