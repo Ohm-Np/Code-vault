@@ -12,7 +12,7 @@ unzip(zipfile = "../Downloads/NPL.zip",
 
 
 # --- subset Kathmandu valley from the GADM polygon ---
-install.packages("sf")
+# install.packages("sf")
 library(sf)
 library(dplyr)
 npl <- read_sf("../Downloads/gadm36_NPL.gpkg")
@@ -20,7 +20,7 @@ plot(npl[1])
 # install.packages("mapview")
 library(mapview)
 mapview(npl)
-install.packages("dplyr")
+# install.packages("dplyr")
 library(dplyr)
 npl.ktm <- npl %>%
   filter(NAME_3 == "Kathmandu")
@@ -35,12 +35,12 @@ write_sf(study_area,
          "../Downloads/study_area.gpkg")
 
 # --- not working ---
-install.packages("devtools")
+# install.packages("devtools")
 library(devtools)
 devtools::install_github("16EAGLE/getSpatialData")
 library(getSpatialData)
 library(raster)
-install.packages("tidyverse")
+# install.packages("tidyverse")
 library(tidyverse)
 library(sf)
 regions <- st_read("../Downloads/study_area.gpkg")
