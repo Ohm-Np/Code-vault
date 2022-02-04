@@ -1,6 +1,8 @@
 # the following code enables user to download the table that we display in the markdown ----
 
 # code for enabling csv download
+library(openssl)
+
 write.csv2(uicn, "./file.csv")
 readLines("./file.csv") %>% 
   paste0(collapse="\n") %>% 
