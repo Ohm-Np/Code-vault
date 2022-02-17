@@ -1,4 +1,4 @@
-# the script creates 10*10 spatial grid around the globe (lat/lon tile)  
+# the script creates 10*10 spatial grid around the globe (lat/lon tile) [global forest watch]
 
 makeGFWGrid <- function(xmin=-180, xmax=170, dx=10, ymin=-50, ymax=80, dy=10,
                         proj=NULL) {
