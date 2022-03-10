@@ -58,3 +58,6 @@ for (i in 1990:2018) {
 }
 
 # https://biogeo.ucdavis.edu/data/worldclim/v2.1/base/wc2.1_30s_prec.zip
+
+# for future reference
+## could also try terra::extract OR exactextractr::extract (better performance than zonal)
