@@ -18,5 +18,5 @@ library(plotly)
 fig1 <- plot_ly(uicn_long.final, x = ~year, y = ~value,
                 name = ~Name, color = ~Name, type = 'scatter', mode = 'lines+markers') %>%
   layout(title="Forst cover loss area in ha")
-# view the plot
+# view the plot (plotly)
 fig1
