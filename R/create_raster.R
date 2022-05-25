@@ -2,6 +2,7 @@
 
 library(terra)
 # lets initiate a raster x with some bounding box
+# Note: You can get bounding box using st_bbox from sf object
 x <- rast(xmin=-70.3064159671597, xmax=-59.5707349268493, ymin=-23.3163534733174, ymax=-10.6381923913516)
 # view the properties
 x
