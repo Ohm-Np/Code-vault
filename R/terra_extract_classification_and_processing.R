@@ -1,6 +1,6 @@
 ## Processing hurricane data for spatial impact evaluation
-# Author: Johannes Schielein
-# Last Edit: 2022-06-03
+# Author: Om Prakash Bhandari
+# Last Edit: 2022-06-08
 
 # call libraries
 library(terra)
@@ -53,7 +53,7 @@ lapply(2000:2020, function(i) {
   )
 
   # create processing routine to get the area affected and not affected by hurricanes
-  area_stats <- pbmclapply(290000:313000, function(j) {
+  area_stats <- pbmclapply(1:nrow(aoi), function(j) {
     tryCatch(
       {
 
