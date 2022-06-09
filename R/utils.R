@@ -16,3 +16,6 @@ strsplit(name, "-|.txt")[[1]][2]
 ## 3. om.bhandari
 strsplit(name, "-")[[1]][1]
 
+# Tips:
+
+## 1. memuse::Sys.meminfo()
