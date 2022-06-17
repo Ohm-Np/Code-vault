@@ -15,3 +15,6 @@ write.csv(data,
           row.names = F)
 
 
+# merge three data frames having one common column
+final_data <- merge(df1, df2) %>%
+  merge(df3)
