@@ -1,4 +1,5 @@
 # the script below shows us how to create raster from scratch and update resolution and add values to the rasters 
+# NOTE: EPSG = 4326 (WGS 84)
 
 library(terra)
 # lets initiate a raster x with some bounding box
