@@ -1,5 +1,5 @@
 # Personal
-A personal repository of some chunk of codes - from multiple programming languages - focusing on spatial data analysis. 
+A personal repository to save some important chunk of codes - possibly from multiple programming languages with focus on spatial data analysis. 
 
 These includes:
 1. R (currently)
