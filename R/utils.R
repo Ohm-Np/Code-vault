@@ -19,3 +19,13 @@ strsplit(name, "-")[[1]][1]
 # Tips:
 
 ## 1. memuse::Sys.meminfo()
+
+
+#### How to split a column in data frame to several columns 
+
+# for e.g., a df contains a column name called "date" in format yyyy-mm-dd
+# now I would like to split the columns into three different columns yyyy, mm, dd
+
+library(tidyr)
+df <- df %>%
+  tidyr::separate(date, c("yyyy", "mm", "dd"))
