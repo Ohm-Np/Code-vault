@@ -1,0 +1,13 @@
+NPL - Nepal
+IND - India
+THA - Thailand
+DEU - Germany
+FRA - France
+AUT - Austria
+CZE - Czech_Republic
+EST - Estonia
+FIN - Finland
+NLD - Netherlands
+POL - Poland
+ESP - Spain
+CHE - Switzerland
